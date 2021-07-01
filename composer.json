@@ -1,5 +1,5 @@
 {
-    "name": "lotuashvili/laravel-scout-elastic-aws",
+    "name": "ashrafakon/laravel-scout-elastic-aws",
     "description": "Elastic Driver for Laravel Scout (with AWS IAM capability)",
     "keywords": ["laravel", "scout", "elasticsearch", "elastic", "aws"],
     "require": {
