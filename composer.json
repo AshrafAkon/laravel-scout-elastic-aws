@@ -1,15 +1,21 @@
 {
     "name": "ashrafakon/laravel-scout-elastic-aws",
     "description": "Elastic Driver for Laravel Scout (with AWS IAM capability)",
-    "keywords": ["laravel", "scout", "elasticsearch", "elastic", "aws"],
+    "keywords": [
+        "laravel",
+        "scout",
+        "elasticsearch",
+        "elastic",
+        "aws"
+    ],
     "require": {
-         "php": "^7.3|^8.0",
-        "laravel/scout": "^8.0",
+        "php": "^8.0",
+        "laravel/scout": "^9.0",
         "elasticsearch/elasticsearch": "^7.13"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
-          "mockery/mockery": "^1.4.2",
+        "mockery/mockery": "^1.4.2",
         "phpunit/phpunit": "^9.3.3"
     },
     "autoload": {
