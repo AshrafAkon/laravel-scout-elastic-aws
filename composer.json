@@ -1,5 +1,6 @@
 {
     "name": "ashrafakon/laravel-scout-elastic-aws",
+    "version": "4.3.0",
     "description": "Elastic Driver for Laravel Scout (with AWS IAM capability)",
     "keywords": [
         "laravel",
