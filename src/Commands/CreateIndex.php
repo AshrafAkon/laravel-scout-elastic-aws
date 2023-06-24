@@ -1,9 +1,9 @@
 <?php
 
-namespace ScoutEngines\Elasticsearch\Commands;
+namespace AshrafAkon\Elasticsearch\Commands;
 
+use AshrafAkon\Elasticsearch\Elasticsearch;
 use Illuminate\Console\Command;
-use ScoutEngines\Elasticsearch\Elasticsearch;
 
 class CreateIndex extends Command
 {
@@ -39,8 +39,8 @@ class CreateIndex extends Command
     public function handle()
     {
         $client = Elasticsearch::client();
-        
-        if(!$client->indices()->exists(['index' => config('scout.elasticsearch.index')])) {
+
+        if (!$client->indices()->exists(['index' => config('scout.elasticsearch.index')])) {
             $params = [
                 'index' => config('scout.elasticsearch.index'),
             ];

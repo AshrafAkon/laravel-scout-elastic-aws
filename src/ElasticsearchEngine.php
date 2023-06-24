@@ -1,30 +1,30 @@
 <?php
 
-namespace ScoutEngines\Elasticsearch;
+namespace AshrafAkon\Elasticsearch;
 
+use Elastic\Elasticsearch\Client;
+use Illuminate\Database\Eloquent\Collection;
 use Laravel\Scout\Builder;
 use Laravel\Scout\Engines\Engine;
-use Elasticsearch\Client as Elastic;
-use Illuminate\Database\Eloquent\Collection;
 
 class ElasticsearchEngine extends Engine
 {
     /**
-     * Elastic where the instance of Elastic|\Elasticsearch\Client is stored.
+     * The ElasticSearch client.
      *
-     * @var object
+     * @var Client
      */
-    protected $elastic;
+    protected $elasticsearch;
 
     /**
      * Create a new engine instance.
      *
-     * @param  \Elasticsearch\Client $elastic
+     * @param  Client  $elasticsearch
      * @return void
      */
-    public function __construct(Elastic $elastic)
+    public function __construct(Client $elasticsearch)
     {
-        $this->elastic = $elastic;
+        $this->elasticsearch = $elasticsearch;
     }
 
     /**
@@ -35,23 +35,30 @@ class ElasticsearchEngine extends Engine
      */
     public function update($models)
     {
-        $params['body'] = [];
+        $params = new Bulk();
+        $params->index($models);
+        $response = $this->elasticsearch->bulk($params->toArray())->asArray();
+        if (array_key_exists('errors', $response) && $response['errors']) {
+            $error = new \Exception (json_encode($response, JSON_PRETTY_PRINT));
+            throw new \Exception ('Bulk update error', $error->getCode(), $error);
+        }
+        // $params['body'] = [];
 
-        $models->each(function ($model) use (&$params) {
-            $params['body'][] = [
-                'update' => [
-                    '_id' => $model->getKey(),
-                    '_index' => $model->searchableAs(),
-                    '_type' => class_basename($model),
-                ]
-            ];
-            $params['body'][] = [
-                'doc' => $model->toSearchableArray(),
-                'doc_as_upsert' => true
-            ];
-        });
+        // $models->each(function ($model) use (&$params) {
+        //     $params['body'][] = [
+        //         'update' => [
+        //             '_id' => $model->getKey(),
+        //             '_index' => $model->searchableAs(),
+        //             '_type' => class_basename($model),
+        //         ],
+        //     ];
+        //     $params['body'][] = [
+        //         'doc' => $model->toSearchableArray(),
+        //         'doc_as_upsert' => true,
+        //     ];
+        // });
 
-        $this->elastic->bulk($params);
+        // $this->elasticsearch->bulk($params);
     }
 
     /**
@@ -70,11 +77,11 @@ class ElasticsearchEngine extends Engine
                     '_id' => $model->getKey(),
                     '_index' => $model->searchableAs(),
                     '_type' => class_basename($model),
-                ]
+                ],
             ];
         });
 
-        $this->elastic->bulk($params);
+        $this->elasticsearch->bulk($params);
     }
 
     /**
@@ -127,10 +134,10 @@ class ElasticsearchEngine extends Engine
             'body' => [
                 'query' => [
                     'bool' => [
-                        'must' => [['query_string' => ['query' => "*{$builder->query}*"]]]
-                    ]
-                ]
-            ]
+                        'must' => [['query_string' => ['query' => "*{$builder->query}*"]]],
+                    ],
+                ],
+            ],
         ];
 
         if ($sort = $this->sort($builder)) {
@@ -155,13 +162,13 @@ class ElasticsearchEngine extends Engine
         if ($builder->callback) {
             return call_user_func(
                 $builder->callback,
-                $this->elastic,
+                $this->elasticsearch,
                 $builder->query,
                 $params
             );
         }
 
-        return $this->elastic->search($params);
+        return $this->elasticsearch->search($params);
     }
 
     /**
@@ -257,14 +264,48 @@ class ElasticsearchEngine extends Engine
      */
     public function flush($model)
     {
-        $this->elastic->deleteByQuery([
+        $this->elasticsearch->deleteByQuery([
             'index' => $model->searchableAs(),
             'type' => class_basename($model),
             'body' => [
                 'query' => [
-                    'match_all' => (object)[]
-                ]
-            ]
+                    'match_all' => (object) [],
+                ],
+            ],
         ]);
+    }
+
+    /**
+     * Create a search index.
+     *
+     * @param  string  $name
+     * @param  array  $options
+     * @return mixed
+     */
+    public function createIndex($name, array $options = [])
+    {
+        throw new \Error ('Not implemented');
+    }
+
+    /**
+     * Delete a search index.
+     *
+     * @param  string  $name
+     * @return mixed
+     */
+    public function deleteIndex($name)
+    {
+        throw new \Error ('Not implemented');
+    }
+
+    /**
+     * Delete a search index.
+     *
+     * @param  string  $name
+     * @return mixed
+     */
+    public function lazyMap(Builder $builder, $results, $model)
+    {
+        throw new \Error ('Not implemented');
     }
 }

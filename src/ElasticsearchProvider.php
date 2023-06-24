@@ -1,9 +1,9 @@
 <?php
 
-namespace ScoutEngines\Elasticsearch;
+namespace AshrafAkon\Elasticsearch;
 
-use Laravel\Scout\EngineManager;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Scout\EngineManager;
 
 class ElasticsearchProvider extends ServiceProvider
 {

@@ -1,7 +1,7 @@
 <?php
 
+use AshrafAkon\Elasticsearch\ElasticsearchEngine;
 use Illuminate\Database\Eloquent\Collection;
-use ScoutEngines\Elasticsearch\ElasticsearchEngine;
 
 class ElasticsearchEngineTest extends PHPUnit_Framework_TestCase
 {
@@ -20,13 +20,13 @@ class ElasticsearchEngineTest extends PHPUnit_Framework_TestCase
                         '_id' => 1,
                         '_index' => 'scout',
                         '_type' => 'table',
-                    ]
+                    ],
                 ],
                 [
-                    'doc' => ['id' => 1 ],
-                    'doc_as_upsert' => true
-                ]
-            ]
+                    'doc' => ['id' => 1],
+                    'doc_as_upsert' => true,
+                ],
+            ],
         ]);
 
         $engine = new ElasticsearchEngine($client, 'scout');
@@ -43,9 +43,9 @@ class ElasticsearchEngineTest extends PHPUnit_Framework_TestCase
                         '_id' => 1,
                         '_index' => 'scout',
                         '_type' => 'table',
-                    ]
+                    ],
                 ],
-            ]
+            ],
         ]);
 
         $engine = new ElasticsearchEngine($client, 'scout');
@@ -65,13 +65,13 @@ class ElasticsearchEngineTest extends PHPUnit_Framework_TestCase
                             ['query_string' => ['query' => '*zonda*']],
                             ['match_phrase' => ['foo' => 1]],
                             ['terms' => ['bar' => [1, 3]]],
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'sort' => [
-                    ['id' => 'desc']
-                ]
-            ]
+                    ['id' => 'desc'],
+                ],
+            ],
         ]);
 
         $engine = new ElasticsearchEngine($client, 'scout');
@@ -119,10 +119,10 @@ class ElasticsearchEngineTest extends PHPUnit_Framework_TestCase
                 'total' => '1',
                 'hits' => [
                     [
-                        '_id' => '1'
-                    ]
-                ]
-            ]
+                        '_id' => '1',
+                    ],
+                ],
+            ],
         ], $model);
 
         $this->assertEquals(1, count($results));
@@ -130,6 +130,7 @@ class ElasticsearchEngineTest extends PHPUnit_Framework_TestCase
 }
 
 class ElasticsearchEngineTestModel extends \Illuminate\Database\Eloquent\Model
+
 {
     public function getIdAttribute()
     {

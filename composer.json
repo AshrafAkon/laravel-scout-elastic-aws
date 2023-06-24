@@ -21,12 +21,12 @@
     },
     "autoload": {
         "psr-4": {
-            "ScoutEngines\\Elasticsearch\\": "src/"
+            "AshrafAkon\\Elasticsearch\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ScoutEngines\\Elasticsearch\\Test\\": "tests"
+            "AshrafAkon\\Elasticsearch\\Test\\": "tests"
         }
     },
     "suggest": {
@@ -35,10 +35,15 @@
     "extra": {
         "laravel": {
             "providers": [
-                "ScoutEngines\\Elasticsearch\\ElasticsearchProvider"
+                "AshrafAkon\\Elasticsearch\\ElasticsearchProvider"
             ]
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
 }

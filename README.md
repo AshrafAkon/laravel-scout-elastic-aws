@@ -27,7 +27,7 @@ You must add the Scout service provider and the package service provider in your
     ...
     Laravel\Scout\ScoutServiceProvider::class,
     ...
-    ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
+    AshrafAkon\Elasticsearch\ElasticsearchProvider::class,
 ],
 ```
 
@@ -72,7 +72,7 @@ If your CI environment does not have access to a working Elasticsearch instance,
 After you've published the Laravel Scout package configuration
 
 ```bash
-php artisan vendor:publish  --provider="ScoutEngines\Elasticsearch\ElasticsearchProvider"
+php artisan vendor:publish  --provider="AshrafAkon\Elasticsearch\ElasticsearchProvider"
 ```
 
 you'll need to update the main scout configuration
@@ -108,7 +108,7 @@ and enable the artisan job:
 // App/Console/Kernel.php
 protected $commands = [
     ...
-    \ScoutEngines\Elasticsearch\Commands\CreateIndex::class,
+    \AshrafAkon\Elasticsearch\Commands\CreateIndex::class,
     ...
 ],
 ```
@@ -124,11 +124,12 @@ php artisan scout:create-index
 
 ## Usage
 
-Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/5.3/scout)
+Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/10.x/scout)
 ## Credits
 
 - [Levan Lotuashvili](https://github.com/lotuashvili)
 - [Erick Tamayo](https://github.com/ericktamayo)
+- [Ashraful Firoz](https://github.com/AshrafAkon)
 - [All Contributors](../../contributors)
 
 ## License

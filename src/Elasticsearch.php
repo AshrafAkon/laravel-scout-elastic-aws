@@ -1,11 +1,11 @@
 <?php
 
-namespace ScoutEngines\Elasticsearch;
+namespace AshrafAkon\Elasticsearch;
 
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\ElasticsearchService\ElasticsearchPhpHandler;
-use Elasticsearch\ClientBuilder;
+use Elastic\Elasticsearch\ClientBuilder;
 
 class Elasticsearch
 {
